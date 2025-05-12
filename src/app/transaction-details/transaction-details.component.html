@@ -1,0 +1,65 @@
+<div class="transaction-details-page">
+    <p *ngIf="message" class="message">{{message}}</p>
+    
+    <div *ngIf="transaction">
+        <!-- Transaction Information -->
+         <div class="section-card">
+            <h2>Información de transacción</h2>
+            <p>Tipo: {{transaction.transactionType}}</p>
+            <p>Estado: {{transaction.status}}</p>
+            <p>Descripción: {{transaction.description}}</p>
+            <p>Productos totales: {{transaction.totalProducts}}</p>
+            <p>Precio total: {{transaction.totalPrice | currency}}</p>
+            <p>Crear: {{transaction.createdAt | date:'short'}}</p>
+
+            <div *ngIf="transaction.updatedAt">
+                <p>Actualizar: {{transaction.updatedAt | date:'short'}}</p>
+            </div>
+         </div>
+
+         <!-- PRODUCT INFORMATION -->
+         <div class="section-card">
+            <h2>Producto Information</h2>
+            <p>Nombre: {{transaction.product.name}}</p>
+            <p>SKU: {{transaction.product.sku}}</p>
+            <p>Precio: {{transaction.product.price | currency}}</p>
+            <p>Cantiodad disponible: {{transaction.product.stockQuantity}}</p>
+            <p>Descripción: {{transaction.product.description}}</p>
+
+            <div *ngIf="transaction.product.imageUrl">
+                <img [src]="transaction.prouct.imageUrl" alt="preview">
+            </div>
+         </div>
+
+         <!-- USER ASSOCIATED WITH THE TRANSACTIONS -->
+         <div class="section-card">
+            <h2>Usuario Information</h2>
+            <p>Nombre: {{transaction.user.name}}</p>
+            <p>Email: {{transaction.user.email}}</p>
+            <p>Número de teléfono: {{transaction.user.phoneNumber}}</p>
+            <p>Rol: {{transaction.user.role}}</p>
+
+         </div>
+
+         <!-- USER ASSOCIATED WITH THE TRANSACTIONS -->
+         <div *ngIf="transaction.supplier" class="section-card">
+            <h2>Información de proveedor</h2>
+            <p>Nombre: {{transaction.supplier.name}}</p>
+            <p>Dirección: {{transaction.supplier.address}}</p>
+         </div>
+
+         <!-- UPDATE TRANSACTION -->
+         <div class="section-card transaction-staus-update">
+            <label for="">Estado: </label>
+            <select [(ngModel)]="status" id="">
+                <option value="PENDING">PENDIENTE</option>
+                <option value="PROCESSING">PROCESANDO</option>
+                <option value="COMPLETED">COMPLETADO</option>
+                <option value="CANCELED">CANCELADO</option>
+            </select>
+            <button (click)="handleUpdateStatus()">Actualizar Estado</button>
+         </div>
+
+    </div>
+
+</div>
