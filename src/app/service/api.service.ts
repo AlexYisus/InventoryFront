@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private static BASE_URL = 'http://localhost:8080/api';
+  private static BASE_URL = 'https://100.125.73.100:8080/api'; 
+  //  private static BASE_URL = 'https://218b88ada564ed5514841423133e0a31.serveo.net/api'; //endpoint
   private static ENCRIPTION_KEY = "my-encrytion-key"
 
   authStatusChanged = new EventEmitter <void>();
@@ -34,7 +35,6 @@ export class ApiService {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
   }
-  
   private getHeader (): HttpHeaders{
     const token = this.getFromStorageAndDecrypt("token");
     return new HttpHeaders({

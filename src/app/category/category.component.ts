@@ -8,6 +8,7 @@ interface Category {
   name:string
 }
 
+
 @Component({
   selector: 'app-category',
   standalone: true,

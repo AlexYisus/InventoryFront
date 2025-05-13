@@ -30,12 +30,10 @@
 
 
         <div class="form-group">
-            <label>Categoría</label>
-            <select [(ngModel)]="idCategory" name="idCategory" required>
-                <option [ngValue]="0" disabled>Selecciona la categoría</option> <!-- Usa 0 como valor inicial -->
-                <option *ngFor="let category of categories" [ngValue]="category.idCategory">
-                    {{ category.name }}
-                </option>
+            <label for="">Categoría</label>
+            <select [(ngModel)]="categoryId" name="categoryId" id="" required>
+                <option value="">Selecciona la categoría</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
             </select>
         </div>
 
