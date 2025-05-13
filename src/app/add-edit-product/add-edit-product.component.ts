@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './add-edit-product.component.html',
   styleUrl: './add-edit-product.component.css',
 })
+
 export class AddEditProductComponent implements OnInit {
   constructor(
     private apiService: ApiService,
@@ -23,7 +24,7 @@ export class AddEditProductComponent implements OnInit {
   sku:string = ''
   price:string = ''
   stockQuantity:string = ''
-  categoryId:number= 0
+  idCategory:number = 0;
   description:string = ''
   imageFile:File | null = null
   imageUrl:string = ''
@@ -44,7 +45,6 @@ export class AddEditProductComponent implements OnInit {
     }
   }
 
-
   //GET ALL CATEGORIES
   fetchCategories():void{
     this.apiService.getAllCategory().subscribe({
@@ -58,9 +58,7 @@ export class AddEditProductComponent implements OnInit {
       }})
   }
 
-
   //GET CATEGORY BY ID
-
   fetchProductById(productId: number):void{
     this.apiService.getProductById(productId).subscribe({
       next:(res:any) =>{
@@ -70,7 +68,7 @@ export class AddEditProductComponent implements OnInit {
           this.sku = product.sku;
           this.price = product.price;
           this.stockQuantity = product.stockQuantity;
-          this.categoryId = product.caetgoryId;
+          this.idCategory = product.idCategory;
           this.description = product.description;
           this.imageUrl = product.imageUrl;
         }else{
@@ -94,14 +92,18 @@ export class AddEditProductComponent implements OnInit {
     }
   }
 
-  handleSubmit(event : Event):void{
+  handleSubmit(event : Event):void {
     event.preventDefault()
+    if (this.idCategory === 0) { // O cualquier lógica de validación
+      this.showMessage("Debes seleccionar una categoría.");
+      return;
+    }
     const formData = new FormData();
     formData.append("name", this.name);
     formData.append("sku", this.sku);
-    formData.append("price", this.price);
-    formData.append("stockQuantity", this.stockQuantity);
-    formData.append("categoryId", this.categoryId.toString());
+    formData.append("price", String(Number(this.price)));
+    formData.append("stockQuantity", String(Number(this.stockQuantity)));
+    formData.append("idCategory", String(this.idCategory));
     formData.append("description", this.description);
 
     if (this.imageFile) {
@@ -133,20 +135,12 @@ export class AddEditProductComponent implements OnInit {
         }})
 
     }
-
-
   }
 
-
-
-
-
-  showMessage(message:string){
+  showMessage(message:string) {
     this.message = message;
     setTimeout(() =>{
       this.message = ''
     }, 4000)
   }
-
-
 }
